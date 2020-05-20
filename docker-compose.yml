@@ -15,6 +15,9 @@ services:
       - "./nginx/sites.d:/etc/nginx/sites.d"
       - "./nginx/auth:/etc/nginx/auth"
       - "./www:/www"
+    networks:
+      - wp-link
+      - planet-link
   wp-php:
     container_name: "lunar_wp-php"
     build: 
@@ -23,12 +26,21 @@ services:
       - wp-mysql
     volumes:
       - "./www:/www"
+    networks:
+      - wp-link
   wp-mysql:
+    container_name: "lunar_wp-mysql"
     image: mysql:8.0.20
     command: --default-authentication-plugin=mysql_native_password
     restart: always
-    container_name: "lunar_wp-mysql"
     environment:
       MYSQL_ROOT_PASSWORD: "juvenile"
     volumes:
       - "./wp-mysql/db:/var/lib/mysql"
+    networks:
+      - wp-link
+networks:
+  wp-link:
+    external: false
+  planet-link:
+    external: true
