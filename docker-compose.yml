@@ -1,12 +1,16 @@
-version: '3.7'
+version: '3.6'
 services:
   web:
-      build: 
-      ports:
-          - "8080:80"
-      depends_on:
-          - php
-  php:
-      image: php:7-fpm
-      volumes:
-          - ./code:/code
+    build: 
+      context: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - php
+    volumes:
+      - 
+  wp-php:
+    build: 
+      context: ./wp-php
+    volumes:
+      - ./code:/code
