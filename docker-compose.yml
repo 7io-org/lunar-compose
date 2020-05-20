@@ -9,6 +9,7 @@ services:
       - "443:443"
     depends_on:
       - wp-php
+    restart: always
     volumes:
       - "/etc/letsencrypt:/etc/letsencrypt"
       - "./nginx/conf.d:/etc/nginx/conf.d"
@@ -24,6 +25,7 @@ services:
       context: ./wp-php
     depends_on:
       - wp-mysql
+    restart: always
     volumes:
       - "./www:/www"
     networks:
