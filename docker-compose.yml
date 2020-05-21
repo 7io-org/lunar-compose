@@ -11,7 +11,7 @@ services:
       - wp-php
     restart: always
     volumes:
-      - "/etc/letsencrypt:/etc/letsencrypt"
+      - "/opt/books/certbot:/etc/letsencrypt"
       - "./nginx/conf.d:/etc/nginx/conf.d"
       - "./nginx/sites.d:/etc/nginx/sites.d"
       - "./nginx/auth:/etc/nginx/auth"
