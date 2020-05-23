@@ -19,6 +19,11 @@ services:
     networks:
       - wp-link
       - planet-link
+    logging:
+      driver: "json-file"
+      options:
+        max-file: '4'
+        max-size: '250m'
   wp-php:
     container_name: "lunar_wp-php"
     build: 
@@ -30,6 +35,11 @@ services:
       - "./www:/www"
     networks:
       - wp-link
+    logging:
+      driver: "json-file"
+      options:
+        max-file: '4'
+        max-size: '250m'
   wp-mysql:
     container_name: "lunar_wp-mysql"
     image: mysql:8.0.20
@@ -41,6 +51,11 @@ services:
       - "./wp-mysql/db:/var/lib/mysql"
     networks:
       - wp-link
+    logging:
+      driver: "json-file"
+      options:
+        max-file: '4'
+        max-size: '250m'
 networks:
   wp-link:
     external: false
