@@ -14,11 +14,29 @@ services:
       - "/opt/books/certbot:/etc/letsencrypt"
       - "./nginx/conf.d:/etc/nginx/conf.d"
       - "./nginx/sites.d:/etc/nginx/sites.d"
+      - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
       - "./nginx/auth:/etc/nginx/auth"
       - "./www:/www"
     networks:
       - wp-link
       - planet-link
+    logging:
+      driver: "json-file"
+      options:
+        max-file: '4'
+        max-size: '250m'
+  web-mon:
+    container_name: "lunar_web-mon"
+    image: 'sophos/nginx-vts-exporter:latest'
+    expose:
+      - 9913
+    depends_on:
+      - web
+    restart: always
+    networks:
+      - planet-link
+    environment:
+      NGINX_STATUS: "http://web/status/control?cmd=status&group=*"
     logging:
       driver: "json-file"
       options:
@@ -69,13 +87,6 @@ services:
       - planet-link
     depends_on:
       - wp-mysql
-    #command: []
-     #- '--collect.info_schema.query_response_time'
-     #- '--collect.info_schema.innodb_tablespaces'
-     #- '--collect.info_schema.tables.databases'
-     #- '--collect.perf_schema.tableiowaits'
-     #- '--collect.perf_schema.indexiowaits'
-     #- '--collect.perf_schema.tablelocks'
     logging:
       driver: "json-file"
       options:
