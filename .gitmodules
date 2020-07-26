@@ -1,0 +1,3 @@
+[submodule "nginx/image"]
+	path = nginx/image
+	url = git@github.com:ledyba/docker-nginx-vts.git

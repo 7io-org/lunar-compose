@@ -3,7 +3,7 @@ services:
   web:
     container_name: "lunar_web"
     build: 
-      context: ./nginx
+      context: ./nginx/image
     ports:
       - "80:80"
       - "443:443"
