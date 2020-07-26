@@ -56,6 +56,32 @@ services:
       options:
         max-file: '4'
         max-size: '250m'
+  wp-mysql-mon:
+    container_name: "lunar_wp-mysql-mon"
+    image: prom/mysqld-exporter
+    restart: always
+    environment:
+      DATA_SOURCE_NAME: "root:juvenile@(wp-mysql:3306)/"
+    expose:
+      - 9104
+    networks:
+      - wp-link
+      - planet-link
+    depends_on:
+      - wp-mysql
+    #command: []
+     #- '--collect.info_schema.query_response_time'
+     #- '--collect.info_schema.innodb_tablespaces'
+     #- '--collect.info_schema.tables.databases'
+     #- '--collect.perf_schema.tableiowaits'
+     #- '--collect.perf_schema.indexiowaits'
+     #- '--collect.perf_schema.tablelocks'
+    logging:
+      driver: "json-file"
+      options:
+        max-file: '4'
+        max-size: '250m'
+
 networks:
   wp-link:
     external: false
