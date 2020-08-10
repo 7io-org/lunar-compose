@@ -1,0 +1,35 @@
+hosts:
+  '7io.org':
+    listen:
+      port: 8080
+    file.index: ['index.html', 'index.php']
+    paths:
+      '/wp/':
+        file.dir: /www/wp
+      '/':
+        file.dir: /www/top
+        redirect:
+          url: /wp/index.php/
+          internal: YES
+          status: 307
+      '/wp/xmlrpc.php':
+        redirect:
+          url: 'https://google.com/'
+          status: 307
+      '/wp/wp-config.php':
+        redirect:
+          url: 'https://google.com/'
+          status: 307
+
+file.custom-handler:
+  extension: '.php'
+  #fastcgi.send-delegated-uri: ON
+  fastcgi.connect:
+    host: 'wp-php'
+    port: 9000
+    type: tcp
+
+access-log: /dev/stdout
+error-log: /dev/stderr
+http2-reprioritize-blocking-assets: ON
+
