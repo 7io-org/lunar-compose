@@ -19,7 +19,7 @@ hosts:
       '/':
         file.dir: /www/top
         redirect:
-          url: /index.php/
+          url: /wp/index.php/
           internal: YES
           status: 307
 
@@ -32,7 +32,10 @@ file.custom-handler:
     port: 9000
     type: tcp
 
-access-log: /dev/stdout
-error-log: /dev/stderr
+# log
+access-log: '/dev/null'
+error-log:  '/dev/stderr'
+
+# http2
 http2-reprioritize-blocking-assets: ON
 
