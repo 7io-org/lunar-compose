@@ -16,23 +16,17 @@ hosts:
           status: 307
       '/wp/':
         file.dir: /www/wp
-        setenv:
-          HTTPS: on
       '/':
         file.dir: /www/top
-        setenv:
-          HTTPS: on
-        mruby.handler: |
-          lambda do |env|
-            if /(.*)/.match(env["PATH_INFO"])
-              return [307, {"x-reproxy-url" => "/wp/index.php?q=#{$1}"}, []]
-            end
-            return [399, {}, []]
-          end
+        redirect:
+          url: /index.php/
+          internal: YES
+          status: 307
 
 file.custom-handler:
   extension: '.php'
-  #fastcgi.send-delegated-uri: ON
+  setenv:
+    HTTPS: on
   fastcgi.connect:
     host: 'wp-php'
     port: 9000
