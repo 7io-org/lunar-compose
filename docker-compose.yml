@@ -36,7 +36,7 @@ services:
     networks:
       - planet-link
     environment:
-      NGINX_STATUS: 'http://web/status/control?cmd=status&group=*'
+      NGINX_STATUS: "http://web/status/control?cmd=status&group=*"
     logging:
       driver: 'json-file'
       options:

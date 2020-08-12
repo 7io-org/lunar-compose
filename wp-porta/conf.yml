@@ -4,14 +4,6 @@ hosts:
       port: 8080
     file.index: ['index.html', 'index.php']
     paths:
-      '/wp/':
-        file.dir: /www/wp
-      '/':
-        file.dir: /www/top
-        redirect:
-          url: /wp/index.php/
-          internal: YES
-          status: 307
       '/wp/xmlrpc.php':
         redirect:
           url: 'https://google.com/'
@@ -20,6 +12,23 @@ hosts:
         redirect:
           url: 'https://google.com/'
           status: 307
+          url: 'https://google.com/'
+          status: 307
+      '/wp/':
+        file.dir: /www/wp
+        setenv:
+          HTTPS: on
+      '/':
+        file.dir: /www/top
+        setenv:
+          HTTPS: on
+        mruby.handler: |
+          lambda do |env|
+            if /(.*)/.match(env["PATH_INFO"])
+              return [307, {"x-reproxy-url" => "/wp/index.php?q=#{$1}"}, []]
+            end
+            return [399, {}, []]
+          end
 
 file.custom-handler:
   extension: '.php'
