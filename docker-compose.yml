@@ -48,14 +48,15 @@ services:
       context: ./wp-porta
     expose:
       - 8080
+    networks:
+      - wp-link
     depends_on:
       - wp-php
     restart: always
     volumes:
       - './www:/www'
       - './wp-porta/conf.yml:/home/h2o/h2o.conf'
-    networks:
-      - wp-link
+      - './wp-sock:/var/run'
     logging:
       driver: 'json-file'
       options:
@@ -65,13 +66,15 @@ services:
     container_name: 'lunar_wp-php'
     build: 
       context: ./wp-php
+    expose: []
+    networks:
+      - wp-link
     depends_on:
       - wp-mysql
     restart: always
     volumes:
       - './www:/www'
-    networks:
-      - wp-link
+      - './wp-sock:/var/run'
     logging:
       driver: 'json-file'
       options:

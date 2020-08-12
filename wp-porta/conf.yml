@@ -28,9 +28,9 @@ file.custom-handler:
   setenv:
     HTTPS: on
   fastcgi.connect:
-    host: 'wp-php'
-    port: 9000
-    type: tcp
+    port: '/var/run/php-fpm.sock'
+    type: unix
+  fastcgi.timeout.keepalive: 3600000
 
 # log
 access-log: '/dev/null'
