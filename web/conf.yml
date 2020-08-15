@@ -17,7 +17,7 @@ hosts:
       '/wp/':
         file.dir: /www/wp
       '/':
-        file.dir: /www/top
+        file.dir: /www
         redirect:
           url: /wp/index.php/
           internal: YES
