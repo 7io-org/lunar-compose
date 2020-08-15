@@ -38,4 +38,3 @@ error-log:  '/dev/stderr'
 
 # http2
 http2-reprioritize-blocking-assets: ON
-
