@@ -1,114 +1,78 @@
+---
 version: '3.6'
 services:
   web:
     container_name: 'lunar_web'
-    build: 
-      context: ./nginx/image
-    ports:
-      - '80:80'
-      - '443:443'
-    depends_on:
-      - wp-php
-    restart: always
-    volumes:
-      - '/opt/books/certbot:/etc/letsencrypt'
-      - './nginx/conf.d:/etc/nginx/conf.d'
-      - './nginx/sites.d:/etc/nginx/sites.d'
-      - './nginx/nginx.conf:/etc/nginx/nginx.conf'
-      - './nginx/auth:/etc/nginx/auth'
-      - './www:/www'
-    networks:
-      - wp-link
-      - planet-link
-    logging:
-      driver: 'json-file'
-      options:
-        max-file: '4'
-        max-size: '250m'
-  web-mon:
-    container_name: 'lunar_web-mon'
-    image: 'sophos/nginx-vts-exporter:latest'
-    expose:
-      - 9913
-    depends_on:
-      - web
-    restart: always
-    networks:
-      - planet-link
-    environment:
-      NGINX_STATUS: "http://web/status/control?cmd=status&group=*"
-    logging:
-      driver: 'json-file'
-      options:
-        max-file: '4'
-        max-size: '250m'
-  wp-porta:
-    container_name: 'lunar_wp-porta'
+    hostname: 'lunar_web'
     build:
-      context: ./wp-porta
+      context: ./web
     expose:
       - 8080
     networks:
-      - wp-link
+      - lunar-link
+      - planet-link
     depends_on:
-      - wp-php
+      - php
     restart: always
     volumes:
       - './www:/www'
-      - './wp-porta/conf.yml:/home/h2o/h2o.conf'
-      - './wp-sock:/var/run'
+      - './web/conf.yml:/home/h2o/h2o.conf'
+      - './php-sock:/var/run'
     logging:
       driver: 'json-file'
       options:
         max-file: '4'
         max-size: '250m'
-  wp-php:
-    container_name: 'lunar_wp-php'
+  php:
+    container_name: 'lunar_php'
+    hostname: 'lunar_php'
     build: 
-      context: ./wp-php
+      context: ./php
     expose: []
     networks:
-      - wp-link
+      - lunar-link
     depends_on:
-      - wp-mysql
+      - mysql
     restart: always
     volumes:
       - './www:/www'
-      - './wp-sock:/var/run'
+      - './php-sock:/var/run'
     logging:
       driver: 'json-file'
       options:
         max-file: '4'
         max-size: '250m'
-  wp-mysql:
-    container_name: 'lunar_wp-mysql'
+  mysql:
+    container_name: 'lunar_mysql'
+    hostname: 'lunar_mysql'
     image: mysql:8.0.20
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 'juvenile'
     volumes:
-      - './wp-mysql/db:/var/lib/mysql'
+      - './mysql/data:/var/lib/mysql'
     networks:
-      - wp-link
+      - lunar-link
     logging:
       driver: 'json-file'
       options:
         max-file: '4'
         max-size: '250m'
-  wp-mysql-mon:
-    container_name: 'lunar_wp-mysql-mon'
+  mysql-mon:
+    container_name: 'lunar_mysql-mon'
+    hostname: 'lunar_mysql-mon'
     image: prom/mysqld-exporter
     restart: always
     environment:
-      DATA_SOURCE_NAME: 'root:juvenile@(wp-mysql:3306)/'
+      DATA_SOURCE_NAME: 'root:juvenile@(mysql:3306)/'
     expose:
       - 9104
     networks:
-      - wp-link
+      - lunar-link
       - planet-link
     depends_on:
-      - wp-mysql
+      - mysql
     logging:
       driver: 'json-file'
       options:
@@ -116,7 +80,7 @@ services:
         max-size: '250m'
 
 networks:
-  wp-link:
+  lunar-link:
     external: false
   planet-link:
     external: true
