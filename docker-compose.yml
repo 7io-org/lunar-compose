@@ -59,9 +59,9 @@ services:
       options:
         max-file: '4'
         max-size: '250m'
-  mysql-mon:
-    container_name: 'lunar_mysql-mon'
-    hostname: 'lunar_mysql-mon'
+  mysql-exporter:
+    container_name: 'lunar_mysql-exporter'
+    hostname: 'lunar_mysql-exporter'
     image: prom/mysqld-exporter
     restart: always
     environment:
