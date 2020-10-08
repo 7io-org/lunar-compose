@@ -4,8 +4,7 @@ services:
   web:
     container_name: 'lunar_web'
     hostname: 'lunar_web'
-    build:
-      context: ./nginx
+    image: 'lkwg82/h2o-http2-server:latest'
     expose:
       - 8080
     networks:
@@ -16,8 +15,8 @@ services:
     restart: always
     volumes:
       - './www:/www'
-      - './web/conf.yml:/home/h2o/h2o.conf'
-      - './php-sock:/var/run'
+      - './conf/h2o:/home/h2o'
+      - './run:/var/run'
     logging:
       driver: 'json-file'
       options:
@@ -28,7 +27,7 @@ services:
     container_name: 'lunar_php'
     hostname: 'lunar_php'
     build: 
-      context: ./php
+      context: ./build/php
     expose: []
     networks:
       - lunar-link
@@ -51,9 +50,9 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 'juvenile'
+      MYSQL_ROOT_PASSWORD: 'root'
     volumes:
-      - './mysql/data:/var/lib/mysql'
+      - './data/mysql:/var/lib/mysql'
     networks:
       - lunar-link
     logging:
@@ -62,13 +61,13 @@ services:
         max-file: '4'
         max-size: '250m'
 
-  mysql-exporter:
-    container_name: 'lunar_mysql-exporter'
-    hostname: 'lunar_mysql-exporter'
+  mysqld-exporter:
+    container_name: 'lunar_mysqld-exporter'
+    hostname: 'lunar_mysqld-exporter'
     image: prom/mysqld-exporter
     restart: always
     environment:
-      DATA_SOURCE_NAME: 'root:juvenile@(mysql:3306)/'
+      DATA_SOURCE_NAME: 'root:root@(mysql:3306)/'
     expose:
       - 9104
     networks:
