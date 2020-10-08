@@ -5,7 +5,7 @@ services:
     container_name: 'lunar_web'
     hostname: 'lunar_web'
     build:
-      context: ./web
+      context: ./nginx
     expose:
       - 8080
     networks:
@@ -23,6 +23,7 @@ services:
       options:
         max-file: '4'
         max-size: '250m'
+
   php:
     container_name: 'lunar_php'
     hostname: 'lunar_php'
@@ -42,6 +43,7 @@ services:
       options:
         max-file: '4'
         max-size: '250m'
+
   mysql:
     container_name: 'lunar_mysql'
     hostname: 'lunar_mysql'
@@ -59,6 +61,7 @@ services:
       options:
         max-file: '4'
         max-size: '250m'
+
   mysql-exporter:
     container_name: 'lunar_mysql-exporter'
     hostname: 'lunar_mysql-exporter'
@@ -84,3 +87,4 @@ networks:
     external: false
   planet-link:
     external: true
+
