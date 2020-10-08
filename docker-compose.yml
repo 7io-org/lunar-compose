@@ -13,9 +13,10 @@ services:
     depends_on:
       - php
     restart: always
+    command: 'h2o --conf /etc/h2o/conf.yml'
     volumes:
       - './www:/www'
-      - './conf/h2o:/home/h2o'
+      - './conf/h2o:/etc/h2o'
       - './run:/var/run'
     logging:
       driver: 'json-file'
@@ -36,7 +37,7 @@ services:
     restart: always
     volumes:
       - './www:/www'
-      - './php-sock:/var/run'
+      - './run:/var/run'
     logging:
       driver: 'json-file'
       options:
