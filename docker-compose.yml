@@ -62,26 +62,6 @@ services:
         max-file: '4'
         max-size: '250m'
 
-  mysqld-exporter:
-    container_name: 'lunar_mysqld-exporter'
-    hostname: 'lunar_mysqld-exporter'
-    image: prom/mysqld-exporter
-    restart: always
-    environment:
-      DATA_SOURCE_NAME: 'root:root@(mysql:3306)/'
-    expose:
-      - 9104
-    networks:
-      - lunar-link
-      - planet-link
-    depends_on:
-      - mysql
-    logging:
-      driver: 'json-file'
-      options:
-        max-file: '4'
-        max-size: '250m'
-
 networks:
   lunar-link:
     external: false
