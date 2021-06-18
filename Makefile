@@ -1,5 +1,5 @@
 .PHONY: up
-up: ./var/postgres ./var/avators ./var/project-background-images ./var/attachments
+up: ./var/mysql
 	docker-compose up -d
 
 .PHONY: down
