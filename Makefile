@@ -1,3 +1,6 @@
+.PHONY: all
+all: ps ;
+
 .PHONY: up
 up: ./var/mysql ./conf/h2o
 	docker-compose up -d
