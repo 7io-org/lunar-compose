@@ -26,5 +26,5 @@ pull:
 # -----------------------------------------------------------------------------
 
 # https://makefiletutorial.com/#automatic-variables
-./var/postgres ./var/avators ./var/project-background-images ./var/attachments:
+./var/mysql:
 	mkdir -p "$@"
