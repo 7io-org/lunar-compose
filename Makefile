@@ -1,5 +1,5 @@
 .PHONY: up
-up: ./var/mysql
+up: ./var/mysql ./conf/h2o
 	docker-compose up -d
 
 .PHONY: down
@@ -23,8 +23,26 @@ build:
 pull:
 	docker-compose pull
 
+.PHONY: log
+log:
+	docker-compose logs -f --tail 0
+
+.PHONY: ps
+ps:
+	docker-compose ps
+
+.PHONY: top
+top:
+	docker-compose top
+
+# -----------------------------------------------------------------------------
+
+.PHONY: backup
+backup:
+	sudo bash _helpers/backup.sh var conf www
+
 # -----------------------------------------------------------------------------
 
 # https://makefiletutorial.com/#automatic-variables
-./var/mysql:
+./var/mysql ./conf/h2o:
 	mkdir -p "$@"

@@ -1,5 +1,5 @@
 ---
-version: '3.7'
+version: '3.9'
 services:
   web:
     container_name: 'lunar_web'
@@ -63,6 +63,8 @@ services:
         max-size: '250m'
 
 networks:
+  default:
+    driver: 'null'
   lunar-link:
     external: false
   planet-link:
