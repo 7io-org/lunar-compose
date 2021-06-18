@@ -8,4 +8,4 @@ cd "${PROJ_PATH}/.."
 docker-compose down
 tar -czvf "${BACKUP_FILENAME}" "$@"
 chown $(id -g):$(id -u) "${BACKUP_FILENAME}"
-docker-compose up
+docker-compose up -d
