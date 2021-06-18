@@ -6,8 +6,8 @@ up: ./var/mysql
 down:
 	docker-compose down
 
-.PHONY: recreate
-recreate:
+.PHONY: reload
+reload:
 	$(MAKE) down
 	$(MAKE) up
 
