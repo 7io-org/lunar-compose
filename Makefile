@@ -42,10 +42,15 @@ top:
 
 .PHONY: backup
 backup:
-	sudo bash _helpers/backup.sh var conf www
+	sudo bash _helpers/backup.sh $(shell id -g) $(shell id -u) var conf www
 
 # -----------------------------------------------------------------------------
 
 # https://makefiletutorial.com/#automatic-variables
 ./var/mysql ./conf/h2o:
 	mkdir -p "$@"
+
+# -----------------------------------------------------------------------------
+.PHONY: cli-db
+cli-db:
+	docker-compose exec mysql mysql -p
