@@ -28,7 +28,7 @@ services:
     container_name: 'lunar_php'
     hostname: 'lunar_php'
     build: 
-      context: ./build/php
+      context: ./images/php
     expose: []
     networks:
       - lunar-link

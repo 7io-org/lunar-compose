@@ -1,4 +1,4 @@
-FROM php:7.4-fpm
+FROM php:8.1-fpm
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libfreetype6-dev \
     libjpeg-dev \
@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     mysqli \
     opcache \
     zip &&\
-  pecl install imagick-3.4.4 && \
+  pecl install imagick-3.7.0 && \
   docker-php-ext-enable imagick
 
 RUN echo 'file_uploads = On\n\
