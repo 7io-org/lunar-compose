@@ -42,7 +42,7 @@ top:
 
 .PHONY: backup
 backup:
-	sudo bash _helpers/backup.sh $(shell id -g) $(shell id -u) var conf www
+	sudo bash _scripts/backup.sh $(shell id -g) $(shell id -u) var conf www
 
 # -----------------------------------------------------------------------------
 
