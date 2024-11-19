@@ -1,5 +1,4 @@
 ---
-version: '3.8'
 services:
   web:
     container_name: 'lunar_web'
@@ -69,4 +68,3 @@ networks:
     external: false
   planet-link:
     external: true
-

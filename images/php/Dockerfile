@@ -1,4 +1,5 @@
-FROM php:8.1-fpm
+# https://github.com/Imagick/imagick/issues/640
+FROM php:8.2-fpm
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libfreetype6-dev \
     libjpeg-dev \

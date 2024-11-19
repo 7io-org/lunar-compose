@@ -1,0 +1,10 @@
+backup-*
+conf
+docker-compose.yml
+LICENSE
+Makefile
+run
+_scripts
+_shortcut
+var
+www
